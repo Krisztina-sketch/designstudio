@@ -35,7 +35,9 @@
                     <p class="card-text">
                         {{ order.description }}
                     </p>
-
+                     <p>
+    <strong>Status:</strong> {{ order.get_status_display }}
+</p>
                     <p class="text-muted">
                         Ordered: {{ order.created_at }}
                     </p>
