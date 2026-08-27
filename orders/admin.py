@@ -1,3 +1,6 @@
 from django.contrib import admin
+from .models import DesignService, DesignOrder
 
-# Register your models here.
+
+admin.site.register(DesignService)
+admin.site.register(DesignOrder)
