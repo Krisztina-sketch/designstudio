@@ -29,15 +29,39 @@
                 <div class="card-body">
 
                     <h5 class="card-title">
-                        {{ order.design_type }}
+                        {{ order.title }}
                     </h5>
 
-                    <p class="card-text">
-                        {{ order.description }}
+                    <p>
+                        <strong>Service:</strong> {{ order.service.name }}
                     </p>
-                     <p>
-    <strong>Status:</strong> {{ order.get_status_display }}
-</p>
+
+                    <p>
+                        <strong>Description:</strong> {{ order.description }}
+                    </p>
+
+                    <p>
+                        <strong>Status:</strong> {{ order.get_status_display }}
+                    </p>
+
+                    <p>
+                        <strong>Price:</strong>
+                        {% if order.price %}
+                            £{{ order.price }}
+                        {% else %}
+                            Not set yet
+                        {% endif %}
+                    </p>
+
+                    <p>
+                        <strong>Payment:</strong>
+                        {% if order.paid %}
+                            Paid
+                        {% else %}
+                            Not paid
+                        {% endif %}
+                    </p>
+
                     <p class="text-muted">
                         Ordered: {{ order.created_at }}
                     </p>
