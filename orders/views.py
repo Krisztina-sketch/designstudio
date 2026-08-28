@@ -65,4 +65,22 @@ def edit_order(request, order_id):
         'order': order,
     }
 
-    return render(request, 'orders/edit_order.html', context)
+    return render(request, 'orders/edit_order.html', context)  
+
+@login_required
+def delete_order(request, order_id):
+    order = get_object_or_404(
+        DesignOrder,
+        id=order_id,
+        user=request.user
+    )
+
+    if request.method == 'POST':
+        order.delete()
+        return redirect('my_orders')
+
+    context = {
+        'order': order,
+    }
+
+    return render(request, 'orders/delete_order.html', context)

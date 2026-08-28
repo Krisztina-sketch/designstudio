@@ -66,6 +66,9 @@
                         <a href="{% url 'edit_order' order.id %}" class="btn btn-dark">
     Edit Order
 </a>
+<a href="{% url 'delete_order' order.id %}" class="btn btn-danger">
+    Delete Order
+</a>
                         Ordered: {{ order.created_at }}
                     </p>
 
