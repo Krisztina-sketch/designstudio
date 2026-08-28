@@ -13,6 +13,7 @@ def create_order(request):
         if form.is_valid():
             order = form.save(commit=False)
             order.user = request.user
+            order.price = order.service.base_price
             order.save()
             return redirect('order_success')
     else:

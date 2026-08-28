@@ -31,6 +31,9 @@
                     {% csrf_token %}
 
                     {{ form.as_p }}
+                    <div class="alert alert-info mt-3" id="quote-box">
+    Estimated price: <strong id="quote-price">Select a service</strong>
+</div>
 
                     <button type="submit" class="btn btn-dark">
                         Submit Order
@@ -39,6 +42,30 @@
             </div>
         </div>
     </main>
+    <script>
+    const serviceSelect = document.getElementById('id_service');
+    const quotePrice = document.getElementById('quote-price');
+
+    const servicePrices = {
+        '1': 50,
+        '2': 40,
+        '3': 30
+    };
+
+    function updateQuote() {
+        const selectedService = serviceSelect.value;
+        const price = servicePrices[selectedService];
+
+        if (price) {
+            quotePrice.textContent = `£${price}.00`;
+        } else {
+            quotePrice.textContent = 'Select a service';
+        }
+    }
+
+    serviceSelect.addEventListener('change', updateQuote);
+    updateQuote();
+</script>
 
 </body>
 </html>
