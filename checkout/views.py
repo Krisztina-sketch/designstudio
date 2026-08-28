@@ -1,17 +1,61 @@
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth import login
-from django.shortcuts import render, redirect
+import stripe
+
+from django.conf import settings
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import get_object_or_404, redirect, render
+
+from orders.models import DesignOrder
 
 
-def signup(request):
-    if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+@login_required
+def create_checkout_session(request, order_id):
+    order = get_object_or_404(
+        DesignOrder,
+        id=order_id,
+        user=request.user
+    )
 
-        if form.is_valid():
-            user = form.save()
-            login(request, user)
-            return redirect('home')
-    else:
-        form = UserCreationForm()
+    stripe.api_key = settings.STRIPE_SECRET_KEY
 
-    return render(request, 'registration/signup.html', {'form': form})
+    checkout_session = stripe.checkout.Session.create(
+        payment_method_types=['card'],
+        line_items=[
+            {
+                'price_data': {
+                    'currency': 'gbp',
+                    'product_data': {
+                        'name': order.title,
+                    },
+                    'unit_amount': int(order.service.base_price * 100),
+                },
+                'quantity': 1,
+            }
+        ],
+        mode='payment',
+        success_url=request.build_absolute_uri(
+            f'/checkout/success/{order.id}/'
+        ),
+        cancel_url=request.build_absolute_uri(
+            '/orders/my-orders/'
+        ),
+    )
+
+    return redirect(checkout_session.url, code=303)
+
+@login_required
+def checkout_success(request, order_id):
+    order = get_object_or_404(
+        DesignOrder,
+        id=order_id,
+        user=request.user
+    )
+
+    order.price = order.service.base_price
+    order.paid = True
+    order.save()
+
+    context = {
+        'order': order,
+    }
+
+    return render(request, 'checkout/checkout_success.html', context)

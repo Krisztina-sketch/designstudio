@@ -62,13 +62,26 @@
                         {% endif %}
                     </p>
 
+                    <div class="mb-3">
+                        <a href="{% url 'edit_order' order.id %}"
+                           class="btn btn-dark">
+                            Edit Order
+                        </a>
+
+                        <a href="{% url 'delete_order' order.id %}"
+                           class="btn btn-danger">
+                            Delete Order
+                        </a>
+
+                        {% if not order.paid %}
+                            <a href="{% url 'checkout:create_checkout_session' order.id %}"
+                               class="btn btn-success">
+                                Pay Now
+                            </a>
+                        {% endif %}
+                    </div>
+
                     <p class="text-muted">
-                        <a href="{% url 'edit_order' order.id %}" class="btn btn-dark">
-    Edit Order
-</a>
-<a href="{% url 'delete_order' order.id %}" class="btn btn-danger">
-    Delete Order
-</a>
                         Ordered: {{ order.created_at }}
                     </p>
 
