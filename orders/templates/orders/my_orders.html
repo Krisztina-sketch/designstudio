@@ -63,6 +63,9 @@
                     </p>
 
                     <p class="text-muted">
+                        <a href="{% url 'edit_order' order.id %}" class="btn btn-dark">
+    Edit Order
+</a>
                         Ordered: {{ order.created_at }}
                     </p>
 

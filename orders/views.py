@@ -1,5 +1,6 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
+
 from .forms import DesignOrderForm
 from .models import DesignOrder
 
@@ -40,3 +41,28 @@ def my_orders(request):
     }
 
     return render(request, 'orders/my_orders.html', context)
+
+
+@login_required
+def edit_order(request, order_id):
+    order = get_object_or_404(
+        DesignOrder,
+        id=order_id,
+        user=request.user
+    )
+
+    if request.method == 'POST':
+        form = DesignOrderForm(request.POST, instance=order)
+
+        if form.is_valid():
+            form.save()
+            return redirect('my_orders')
+    else:
+        form = DesignOrderForm(instance=order)
+
+    context = {
+        'form': form,
+        'order': order,
+    }
+
+    return render(request, 'orders/edit_order.html', context)
