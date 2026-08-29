@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+       <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -63,6 +63,7 @@
                     </p>
 
                     <div class="mb-3">
+
                         <a href="{% url 'edit_order' order.id %}"
                            class="btn btn-dark">
                             Edit Order
@@ -79,6 +80,14 @@
                                 Pay Now
                             </a>
                         {% endif %}
+
+                        {% if order.paid %}
+                            <a href="{% url 'order_delivery' order.id %}"
+                               class="btn btn-primary">
+                                View Delivery
+                            </a>
+                        {% endif %}
+
                     </div>
 
                     <p class="text-muted">
@@ -87,6 +96,7 @@
 
                 </div>
             </div>
+
         {% endfor %}
 
     {% else %}
@@ -102,4 +112,4 @@
 </main>
 
 </body>
-</html>
+</html>       

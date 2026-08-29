@@ -85,3 +85,17 @@ def delete_order(request, order_id):
     }
 
     return render(request, 'orders/delete_order.html', context)
+@login_required
+def order_delivery(request, order_id):
+    order = get_object_or_404(
+        DesignOrder,
+        id=order_id,
+        user=request.user,
+        paid=True
+    )
+
+    context = {
+        'order': order,
+    }
+
+    return render(request, 'orders/order_delivery.html', context)
