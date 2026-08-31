@@ -36,11 +36,12 @@ def create_checkout_session(request, order_id):
             f'/checkout/success/{order.id}/'
         ),
         cancel_url=request.build_absolute_uri(
-            '/orders/my-orders/'
+            '/checkout/cancel/'
         ),
     )
 
     return redirect(checkout_session.url, code=303)
+
 
 @login_required
 def checkout_success(request, order_id):
@@ -59,3 +60,8 @@ def checkout_success(request, order_id):
     }
 
     return render(request, 'checkout/checkout_success.html', context)
+
+
+@login_required
+def checkout_cancel(request):
+    return render(request, 'checkout/checkout_cancel.html')

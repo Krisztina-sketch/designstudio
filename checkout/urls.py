@@ -14,4 +14,9 @@ urlpatterns = [
         views.checkout_success,
         name='checkout_success'
     ),
+    path(
+        'cancel/',
+        views.checkout_cancel,
+        name='checkout_cancel'
+    ),
 ]
