@@ -175,28 +175,78 @@ Deployment and static file configuration were also adjusted during development t
 
 ## Deployment
 
-The project source code is stored in a GitHub repository and the live application is deployed using Heroku.
+DesignStudio is deployed to Heroku, with the source code stored on GitHub.
 
-### GitHub
+### Local Deployment
 
-Git and GitHub were used for version control throughout development.
+To run the project locally:
 
-Changes were committed regularly during the development of features including authentication, ordering, Stripe checkout, services, portfolio content and deployment configuration.
+1. Clone the GitHub repository.
+2. Open the project directory in a code editor.
+3. Create and activate a Python virtual environment.
+4. Install the required dependencies:
 
-### Heroku
+   pip install -r requirements.txt
 
-The Django application was deployed to Heroku.
+5. Configure the required environment variables, including `DJANGO_SECRET_KEY`. Stripe credentials should also be configured through environment variables when payment functionality is being used.
+6. Prepare the database by running:
 
-The deployment configuration includes:
+   python manage.py migrate
 
-- A Procfile defining the application's web process.
-- A requirements.txt file containing the Python dependencies.
-- Python runtime configuration.
-- Production environment configuration.
-- Static file configuration.
-- Environment variables for sensitive configuration values.
+7. Start the development server:
 
-Sensitive information such as secret keys and Stripe credentials should not be committed to the public GitHub repository. These values are configured through environment variables.
+   python manage.py runserver
+
+### Database
+
+The project uses Django's relational database system. Database migrations are used to create and update the required database tables.
+
+After cloning the project or deploying it to a new environment, migrations should be applied using:
+
+   python manage.py migrate
+
+The application contains custom models for design services and customer design orders, with relationships to Django's User model.
+
+### Heroku Deployment
+
+The application was deployed to Heroku using the following process:
+
+1. Create a Heroku application.
+2. Connect the project repository to Heroku.
+3. Configure the required environment variables in Heroku Config Vars.
+4. Set `DEBUG` to `False` for production.
+5. Configure `ALLOWED_HOSTS` for the Heroku application domain.
+6. Store `DJANGO_SECRET_KEY` as a Heroku environment variable rather than in the public repository.
+7. Add Stripe credentials as environment variables when Stripe payment processing is configured.
+8. Ensure `requirements.txt` contains the required Python dependencies.
+9. Use the project's `Procfile` to define the Heroku web process.
+10. Deploy the `main` branch to Heroku.
+11. Run Django database migrations in the deployed environment:
+
+    heroku run python manage.py migrate
+
+12. Verify the deployment using:
+
+    heroku run python manage.py check
+
+Sensitive information such as secret keys and Stripe credentials must not be committed to the public GitHub repository.
+
+### Testing the Deployment
+
+After deployment, the live application should be checked against the development version. Manual testing includes:
+
+- Navigation between pages.
+- User registration, login and logout.
+- Creating design orders.
+- Viewing orders in My Orders.
+- Editing and deleting orders.
+- Displaying service prices and payment status.
+- Testing payment checkout when valid Stripe test credentials are configured.
+- Checking successful and cancelled payment feedback.
+- Confirming that protected order pages require authentication.
+- Confirming that the production Django configuration passes `python manage.py check`.
+
+The purpose of these deployment and testing steps is to ensure that the production application behaves consistently with the development version while keeping sensitive configuration outside the source code.
 
 ## Credits
 
