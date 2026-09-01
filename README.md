@@ -256,6 +256,16 @@ DesignStudio was developed as a full-stack Django project for educational purpos
 
 Documentation for Django, Bootstrap, Stripe, GitHub and Heroku was used during the development and deployment process.
 
+## Wireframes
+
+Wireframes were created to plan the structure, layout and user journey of the DesignStudio application before and during development.
+
+The wireframes cover the main areas of the application, including the home page, services, portfolio, order creation, order management and checkout.
+
+![DesignStudio Wireframes](docs/wireframe-project-4.png)
+
+The final application follows the overall structure of the wireframes, although some elements were adapted during development as the functionality of the project evolved.
+
 ## Future Improvements
 
 Possible future improvements to DesignStudio include:
