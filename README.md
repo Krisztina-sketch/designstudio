@@ -165,6 +165,24 @@ The following functionality was tested:
 | Payment Status | The payment status is displayed with the order | Pass |
 | Stripe | Pay Now provides access to the Stripe test payment process | Pass |
 
+### Python PEP8 Validation
+
+Python code was validated using `pycodestyle`.
+
+The following command was run:
+
+`python -m pycodestyle . --exclude=migrations,.venv,venv`
+
+The validation completed with no errors or warnings.
+
+The Django project was also checked using:
+
+`python manage.py check`
+
+Result:
+
+`System check identified no issues (0 silenced).`
+
 ### Bugs and Fixes
 
 During development, several issues were encountered and resolved.
