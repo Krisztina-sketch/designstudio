@@ -276,3 +276,11 @@ Possible future improvements to DesignStudio include:
 - Customer notifications when an order status changes.
 - Additional payment and order management features.
 - Further improvements to the visual design and user experience.
+
+### Stripe Payment Testing
+
+| Test | Expected Result | Actual Result | Pass |
+|---|---|---|---|
+| Click Pay Now on an unpaid order | User is redirected to Stripe Checkout | Stripe Checkout opened successfully | Yes |
+| Complete payment using Stripe test card | User is redirected to the payment success page and order is marked as paid | Payment completed and order displayed "Payment: Paid" | Yes |
+| Cancel Stripe Checkout | User is redirected to the payment cancelled page and is not charged | Payment Cancelled page displayed correctly | Yes |
